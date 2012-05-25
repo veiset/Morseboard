@@ -46,18 +46,22 @@ def getCharFromMorse(bools):
 
     Return represented characters.
     """
+    DOT  = 1
+    DASH = 2
 
     hash = 0
-    for i in range(len(bools)):
-        if bools[i]:
-            hash += 2 * (3**i)
+    for (i, b) in enumerate(bools):
+        print i,b
+        if b:
+            hash += DASH * (3**i)
         else:
-            hash += 1 * (3**i)
+            hash += DOT  * (3**i)
 
     if hash >= len(morseMap):
         return None 
 
     return morseMap[hash]
+
 
 def getMorseFromChar(c):
     '''
@@ -99,3 +103,35 @@ def getMorseFromChar(c):
       'X' : [True,False,False,True],
       'Y' : [True,False,True,True],
       'Z' : [True,True,False,False]}[c]
+
+def getHashFromChar(c):
+    DOT  = 1
+    DASH = 2
+    END  = 3
+
+    bools = getMorseFromChar(c)
+    states = []
+
+    for b in bools:
+        if b:
+            states.append(DASH)
+        else:
+            states.append(DOT)
+    states.append(END)
+
+    states = states[::-1]
+
+    hash = 0
+    for (i, state) in enumerate(states):
+        if state == DOT:
+            hash += DOT * (4**i)
+        if state == DASH:
+            hash += DASH * (4**i)
+        if state == END:
+            hash += END * (4**i)
+
+    return hash
+
+getCharFromMorse([False,True])
+print getHashFromChar('B')
+
