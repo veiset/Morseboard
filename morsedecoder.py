@@ -1,3 +1,4 @@
+from morseparser import *
 
 encoding = 100*[None]
  """
@@ -17,7 +18,6 @@ def guessWord(probString,pointer = 0):
     if encoding[pointer] == None:
         return [("",0)]
 
-    currChar = probString[0]
     alternatives = []
 
     if encoding[pointer] != 0:
@@ -25,8 +25,8 @@ def guessWord(probString,pointer = 0):
             alternatives.append((encoding[pointer] + stopHereRest,stopHereProb))
 
 
-    for (symbol,charProb) in currChar:
-        for word in guessWord(probString[1:],pointer * hashSize + getHash(symbol)):
+    for (symbol,charProb) in probString[0]:
+        for word in guessWord(probString[1:],pointer * hashSize + symbol):
             alternatives.append(awsm);
 
     return alternatives

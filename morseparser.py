@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+hashSize = 4
+
 '''
 Implementation of the International Morse Code,
 see: http://en.wikipedia.org/wiki/Morse_code 
@@ -124,11 +126,11 @@ def getHashFromChar(c):
     hash = 0
     for (i, state) in enumerate(states):
         if state == DOT:
-            hash += DOT * (4**i)
+            hash += DOT * (hashSize**i)
         if state == DASH:
-            hash += DASH * (4**i)
+            hash += DASH * (hashSize**i)
         if state == END:
-            hash += END * (4**i)
+            hash += END * (hashSize**i)
 
     return hash
 
