@@ -1,25 +1,34 @@
 # -*- coding: utf-8 -*-
-morseMap = [None] * 100
-morseMap[7] = 'A'
+
+'''
+Implementation of the International Morse Code,
+see: http://en.wikipedia.org/wiki/Morse_code 
+
+Using a Binary Trie with morse code inserted,
+this is done because Binary would not catch
+prefixes. 
+'''
+morseMap     = [None] * 100
+morseMap[7]  = 'A'
 morseMap[41] = 'B'
 morseMap[50] = 'C'
 morseMap[14] = 'D'
-morseMap[1] = 'E'
+morseMap[1]  = 'E'
 morseMap[49] = 'F'
 morseMap[35] = 'G'
 morseMap[40] = 'H'
-morseMap[4] = 'I'
+morseMap[4]  = 'I'
 morseMap[79] = 'J'
 morseMap[23] = 'K'
 morseMap[43] = 'L'
-morseMap[8] = 'M'
-morseMap[5] = 'N'
+morseMap[8]  = 'M'
+morseMap[5]  = 'N'
 morseMap[26] = 'O'
 morseMap[52] = 'P'
 morseMap[71] = 'Q'
 morseMap[16] = 'R'
 morseMap[13] = 'S'
-morseMap[2] = 'T'
+morseMap[2]  = 'T'
 morseMap[22] = 'U'
 morseMap[67] = 'V'
 morseMap[25] = 'W'
@@ -27,24 +36,43 @@ morseMap[68] = 'X'
 morseMap[77] = 'Y'
 morseMap[44] = 'Z'
 
-def getCharFromMorse(x): 
-  """
-  Takes a list of booleans as an input, representing
-  a morsecode, false for "dot" and true for "dash".
-  returns the character it represents.
-  """
-  hash = 0
+def getCharFromMorse(bools): 
+    """
+    Takes a list of booleans as an input, representing
+    a morse code, false for "dot" and true for "dash".
 
-  for i in range(len(x)):
-    if x[i]:
-      hash += 2 * (3**i)
-    else:
-      hash += 1 * (3**i)
-     
-  return morseMap[hash]
+    Keyword arguments:
+    bools   -- A list of boolean values representing morse
+
+    Return represented characters.
+    """
+
+    hash = 0
+    for i in range(len(bools)):
+        if bools[i]:
+            hash += 2 * (3**i)
+        else:
+            hash += 1 * (3**i)
+
+    if hash >= len(morseMap):
+        return None 
+
+    return morseMap[hash]
 
 def getMorseFromChar(c):
-  return {
+    '''
+    Returns a morse representation of a character
+    in form a list of True/False values. 
+    True represent a dash, and False a dot.
+
+    Keyword arguments:
+    c    -- Character
+
+    Return morse representation of a character
+    '''
+    c = c.upper()
+
+    return {
       'A' : [False,True],
       'B' : [True,False,False,False],
       'C' : [True,False,True,False],
