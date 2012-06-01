@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 hashSize = 4
+DOT  = 1
+DASH = 2
+END  = 3
 
 '''
 Implementation of the International Morse Code,
@@ -65,7 +68,7 @@ def getCharFromMorse(bools):
     return morseMap[hash]
 
 
-def getMorseFromChar(c):
+def getBoolsFromChar(c):
     '''
     Returns a morse representation of a character
     in form a list of True/False values. 
@@ -106,23 +109,25 @@ def getMorseFromChar(c):
       'Y' : [True,False,True,True],
       'Z' : [True,True,False,False]}[c]
 
-def getHashFromChar(c):
-    DOT  = 1
-    DASH = 2
-    END  = 3
-
-    bools = getMorseFromChar(c)
+def getMorseFromBools(bools):
     states = []
-
     for b in bools:
         if b:
             states.append(DASH)
         else:
             states.append(DOT)
+    return states
+
+def getHashFromChar(c):
+
+    bools = getBoolsFromChar(c)
+
+    states = getMorseFromBools(bools)
     states.append(END)
 
-    states = states[::-1]
+    return getHashFromMorse(states)
 
+def getHashFromMorse(states):
     hash = 0
     for (i, state) in enumerate(states):
         if state == DOT:
@@ -131,9 +136,4 @@ def getHashFromChar(c):
             hash += DASH * (hashSize**i)
         if state == END:
             hash += END * (hashSize**i)
-
     return hash
-
-getCharFromMorse([False,True])
-print getHashFromChar('B')
-
