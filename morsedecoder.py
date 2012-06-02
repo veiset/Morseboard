@@ -1,4 +1,5 @@
 from morseparser import *
+import string
 
 class MorseDecoder:
   encoding = 1000*[None]
@@ -7,12 +8,12 @@ class MorseDecoder:
   0 means that there is no character at this node, and anything else is a character.
   """
   def __init__(self):
-      for code in range(65,90):
-          self.encoding[getHashFromChar(chr(code))] = chr(code)
+      for char in string.uppercase:
+          self.encoding[getHashFromChar(char)] = char
 
       self.encoding[0] = 0
-      for code in range(65,90):
-           bools = getBoolsFromChar(chr(code))
+      for char in string.uppercase:
+           bools = getBoolsFromChar(char)
            morse = getMorseFromBools(bools)
            for i in range(len(bools)):
                theHash = getHashFromMorse(morse[:i+1])
