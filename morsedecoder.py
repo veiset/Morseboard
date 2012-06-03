@@ -29,6 +29,9 @@ class MorseDecoder:
         [[(Symbol,probability)]] -> [(String,probability)]
   
       """
+      print probString
+      print pointer
+      print ""
 
       if self.encoding[pointer] == None:
           return []
@@ -41,13 +44,13 @@ class MorseDecoder:
       alternatives = []
   
       if self.encoding[pointer] != 0:
-          for (stopHereRest,stopHereProb) in self.guessWord(probString[1:],0):
-              print stopHereRest
+          for (stopHereRest,stopHereProb) in self.guessWord(probString,0,0):
+              print stopHereRest,stopHereProb
               alternatives.append((self.encoding[pointer] + stopHereRest,stopHereProb))
   
   
       for (symbol,charProb) in probString[0]:
-          for word in self.guessWord(probString[1:],pointer + (symbol*(hashSize**i)),i+1):
-              alternatives.append(word);
+          for (word,prob) in self.guessWord(probString[1:],pointer + (symbol*(hashSize**i)),i+1):
+              alternatives.append((word,charProb*prob))
   
       return alternatives
