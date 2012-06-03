@@ -22,24 +22,24 @@ class MorseDecoder:
  
   def guessWord(self,probString,pointer = 0,i=0):
       """
-        
+        Given a string of list of Dash,Dot or CharStop and a probability
+        of there beeing that Symbol in that position, returns
+        the list of decoded strings with the probability of it
+        beeing that string.
         [[(Symbol,probability)]] -> [(String,probability)]
   
       """
-      print pointer
-      print probString
-      if len(probString) == 0 and self.encoding[pointer] == 0:
-          return [("",0)]
+
+      if self.encoding[pointer] == None:
+          return []
+      elif len(probString) == 0 and self.encoding[pointer] == 0:
+          return []
       elif len(probString) == 0 and self.encoding[pointer] != 0:
           return [(self.encoding[pointer],1)]
   
-      if self.encoding[pointer] == None:
-          print pointer
-          return [("",0)]
   
       alternatives = []
   
-      print "lookie",self.encoding[pointer]
       if self.encoding[pointer] != 0:
           for (stopHereRest,stopHereProb) in self.guessWord(probString[1:],0):
               print stopHereRest
